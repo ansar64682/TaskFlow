@@ -1,6 +1,7 @@
 import express from "express";
 import router from "./routes/routes.js";
 import connectDB from "./config/database.js";
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 connectDB();
@@ -8,6 +9,7 @@ connectDB();
 const port = process.env.PORT || 8800;
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extends: false }));
