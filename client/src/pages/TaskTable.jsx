@@ -1,7 +1,8 @@
 import React from "react";
 import { useTodo } from "../../DataStore";
+import AddTask from "./AddTask";
 
-export default function TaskTable({ isDarkMode }) {
+export default function TaskTable({ isDarkMode, showAddBtn, setShowAddBtn }) {
   const { todos, loading, error, toggleCompletion } = useTodo();
 
   // Priority colors for both themes
@@ -234,6 +235,9 @@ export default function TaskTable({ isDarkMode }) {
               </td>
             </tr>
           ))}
+          {showAddBtn && (
+            <AddTask isDarkMode={isDarkMode} setShowAddBtn={setShowAddBtn} />
+          )}
         </tbody>
       </table>
     </div>

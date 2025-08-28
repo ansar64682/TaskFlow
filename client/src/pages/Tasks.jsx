@@ -5,6 +5,11 @@ import TaskTable from "./TaskTable";
 export default function TasksPage() {
   const { todos, loading, error } = useTodo();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showAddBtn, setShowAddBtn] = useState(false);
+
+  const toggleAddBtn = () => {
+    setShowAddBtn(true);
+  };
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -74,6 +79,7 @@ export default function TasksPage() {
 
               {/* Add Task Button */}
               <button
+                onClick={toggleAddBtn}
                 className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 hover:shadow-lg ${
                   isDarkMode
                     ? "bg-blue-600 hover:bg-blue-700 text-white"
@@ -256,7 +262,11 @@ export default function TasksPage() {
           {/* Task Table */}
           {!loading && !error && (
             <div className="p-6">
-              <TaskTable isDarkMode={isDarkMode} />
+              <TaskTable
+                isDarkMode={isDarkMode}
+                showAddBtn={showAddBtn}
+                setShowAddBtn={setShowAddBtn}
+              />
             </div>
           )}
         </div>

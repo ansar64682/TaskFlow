@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable no-unused-vars */
 import { createContext, useContext } from "react";
 import { useState, useEffect } from "react";
 
@@ -69,12 +68,31 @@ export const TodoProvider = ({ children }) => {
     }
   };
 
+  const addNewTask = async (newTask) => {
+    try {
+      console.log("recieved new task", newTask);
+
+      const response = await fetch("http://localhost:5000/api/addTodo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask),
+      });
+      if (!response.ok) {
+        throw new Error("HTTP Error! status : ", response.status);
+      }
+      fetchTodos();
+    } catch (err) {
+      console.log("An error occured ", err);
+    }
+  };
+
   const values = {
     todos,
     loading,
     error,
     fetchTodos,
     toggleCompletion,
+    addNewTask,
   };
   // console.log(todos);
 
