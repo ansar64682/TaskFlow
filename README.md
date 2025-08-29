@@ -46,22 +46,21 @@ A production-ready todo application built with the MERN stack (MongoDB, Express,
 TODO-App/
 ├── client/              # React Frontend Application
 │   ├── src/
-│   │   ├── components/  # Reusable UI components
-│   │   ├── contexts/    # React Context providers
-│   │   ├── assets/      # Images, styles, and static files
-│   │   └── App.js       # Main application component
-│   ├── public/          # Static public assets
+│   │   ├── pages/
+│   │   ├── assets/
+│   │   └── App.js
+│   ├── public/
 │   └── package.json     # Frontend dependencies
+|
 ├── server/              # Express Backend API
 │   ├── models/          # MongoDB schema definitions
-│   │   └── Todo.js      # Todo model with validation
+│   │   └── Todo.js
 │   ├── routes/          # API route handlers
-│   │   └── todos.js     # Todo CRUD operations
+│   │   └── routes.js
 │   ├── controllers/     # Business logic controllers
 │   │   └── todosController.js
-│   ├── config/          # Configuration files
+│   ├── config/
 │   │   └── database.js  # MongoDB connection setup
-│   ├── middleware/      # Custom middleware functions
 │   └── server.js        # Express server initialization
 ├── .gitignore
 └── README.md
@@ -73,7 +72,7 @@ TODO-App/
 
 - Node.js 16+
 - MongoDB 6.0+
-- npm or yarn
+- npm
 
 ### Backend Setup
 
@@ -89,7 +88,7 @@ cp .env.example .env
 # Edit .env with your MongoDB connection string
 
 # Start development server
-npm run dev
+node server
 # Server runs on http://localhost:5000
 ```
 
