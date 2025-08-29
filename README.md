@@ -43,7 +43,7 @@ A production-ready todo application built with the MERN stack (MongoDB, Express,
 ## 📁 Project Structure
 
 ```
-TODO-App/
+TaskFlow/
 ├── client/              # React Frontend Application
 │   ├── src/
 │   │   ├── pages/
