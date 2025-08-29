@@ -3,7 +3,8 @@ import { useTodo } from "../../DataStore";
 import AddTask from "./AddTask";
 
 export default function TaskTable({ isDarkMode, showAddBtn, setShowAddBtn }) {
-  const { todos, loading, error, toggleCompletion } = useTodo();
+  const { filteredTasks, loading, error, toggleCompletion, delTask } =
+    useTodo();
 
   // Priority colors for both themes
   const priorityColors = {
@@ -59,7 +60,7 @@ export default function TaskTable({ isDarkMode, showAddBtn, setShowAddBtn }) {
     );
   }
 
-  if (todos.length === 0) {
+  if (filteredTasks.length === 0 && !showAddBtn) {
     return (
       <div
         className={`p-8 text-center ${
@@ -104,7 +105,7 @@ export default function TaskTable({ isDarkMode, showAddBtn, setShowAddBtn }) {
           </tr>
         </thead>
         <tbody>
-          {todos.map((todo) => (
+          {filteredTasks.map((todo) => (
             <tr
               key={todo._id}
               className={`group transition-all duration-200 ${
@@ -232,6 +233,14 @@ export default function TaskTable({ isDarkMode, showAddBtn, setShowAddBtn }) {
                     </span>
                   )}
                 </span>
+              </td>
+              <td>
+                <button
+                  className="px-2 py-2 rounded-lg  hover:bg-red-700 hover:ring-2 ring-red-100 transition"
+                  onClick={() => delTask(todo._id)}
+                >
+                  🗑
+                </button>
               </td>
             </tr>
           ))}

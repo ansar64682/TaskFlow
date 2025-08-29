@@ -3,17 +3,16 @@ import { useTodo } from "../../DataStore";
 import TaskTable from "./TaskTable";
 
 export default function TasksPage() {
-  const { todos, loading, error } = useTodo();
+  const { todos, loading, error, setFilter, filter } = useTodo();
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showAddBtn, setShowAddBtn] = useState(false);
-
-  const toggleAddBtn = () => {
-    setShowAddBtn(true);
-  };
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle("dark");
+  };
+  const [showAddBtn, setShowAddBtn] = useState(false);
+  const toggleAddBtn = () => {
+    setShowAddBtn(true);
   };
 
   return (
@@ -69,12 +68,19 @@ export default function TasksPage() {
                     ? "bg-blue-600 justify-end"
                     : "bg-gray-300 justify-start"
                 }`}
+                aria-label="Toggle dark mode"
               >
                 <div
-                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                    isDarkMode ? "bg-white" : "bg-white"
+                  className={`transform transition-transform duration-300 ${
+                    isDarkMode ? "rotate-0" : "rotate-180"
                   }`}
-                />
+                >
+                  {isDarkMode ? (
+                    <span className="text-xs">🌙</span>
+                  ) : (
+                    <span className="text-xs">☀️</span>
+                  )}
+                </div>
               </button>
 
               {/* Add Task Button */}
@@ -91,17 +97,6 @@ export default function TasksPage() {
                   New Task
                 </span>
               </button>
-
-              {/*Delete Buton */}
-              <button
-                className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 hover:shadow-lg ${
-                  isDarkMode
-                    ? "bg-red-600 hover:bg-red-700 text-white"
-                    : "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-900 text-white"
-                }`}
-              >
-                <span className="flex items-center gap-2">Delete</span>
-              </button>
             </div>
           </div>
         </div>
@@ -112,11 +107,22 @@ export default function TasksPage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div
-            className={`rounded-2xl p-6 backdrop-blur-sm border ${
+            className={`rounded-2xl p-6 backdrop-blur-sm border transition-all duration-300 cursor-pointer ${
               isDarkMode
                 ? "bg-gray-800/50 border-gray-700"
                 : "bg-white/80 border-gray-200"
-            }`}
+            }
+             ${
+               filter === null
+                 ? `ring-4 ${
+                     isDarkMode ? "ring-blue-400" : "ring-blue-500"
+                   } shadow-lg scale-105`
+                 : "ring-2 ring-transparent hover:ring-blue-300"
+             }
+            `}
+            onClick={() => {
+              setFilter(null);
+            }}
           >
             <div className="flex items-center justify-between">
               <div>
@@ -142,13 +148,26 @@ export default function TasksPage() {
           </div>
 
           <div
-            className={`rounded-2xl p-6 backdrop-blur-sm border ${
+            className={`rounded-2xl p-6 backdrop-blur-sm border transition-all duration-300 cursor-pointer ${
               isDarkMode
                 ? "bg-gray-800/50 border-gray-700"
                 : "bg-white/80 border-gray-200"
-            }`}
+            }
+            ${
+              filter === true
+                ? `ring-4 ${
+                    isDarkMode ? "!ring-green-400" : "!ring-green-500"
+                  } shadow-lg scale-105`
+                : "ring-2 ring-transparent hover:ring-green-300"
+            }
+            `}
           >
-            <div className="flex items-center justify-between">
+            <div
+              className="flex items-center justify-between"
+              onClick={() => {
+                setFilter(true);
+              }}
+            >
               <div>
                 <p
                   className={`text-sm font-medium ${
@@ -172,13 +191,26 @@ export default function TasksPage() {
           </div>
 
           <div
-            className={`rounded-2xl p-6 backdrop-blur-sm border ${
+            className={`rounded-2xl p-6 backdrop-blur-sm border transition-all duration-300 cursor-pointer ${
               isDarkMode
                 ? "bg-gray-800/50 border-gray-700"
                 : "bg-white/80 border-gray-200"
-            }`}
+            }
+            ${
+              filter === false
+                ? `ring-4 ${
+                    isDarkMode ? "!ring-orange-400" : "!ring-orange-500"
+                  } shadow-lg scale-105`
+                : "ring-2 ring-transparent hover:ring-orange-300"
+            }
+            `}
           >
-            <div className="flex items-center justify-between">
+            <div
+              className="flex items-center justify-between"
+              onClick={() => {
+                setFilter(false);
+              }}
+            >
               <div>
                 <p
                   className={`text-sm font-medium ${

@@ -16,6 +16,22 @@ export const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filter, setFilter] = useState(null);
+
+  const filteredTodos = () => {
+    let result = [...todos];
+
+    result = result.filter((prev) => {
+      if (filter === null) {
+        return true;
+      } else {
+        return prev.completed === filter;
+      }
+    });
+    return result;
+  };
+
+  const filteredTasks = filteredTodos();
 
   const fetchTodos = async () => {
     try {
@@ -86,13 +102,31 @@ export const TodoProvider = ({ children }) => {
     }
   };
 
+  const delTask = async (todoId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/todos/${todoId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) throw new Error("Delete failed");
+      fetchTodos();
+    } catch (err) {
+      console.log("Error Ocuured......", err);
+    }
+  };
+
   const values = {
     todos,
     loading,
     error,
+    filteredTasks,
+    setFilter,
     fetchTodos,
     toggleCompletion,
     addNewTask,
+    delTask,
   };
   // console.log(todos);
 
